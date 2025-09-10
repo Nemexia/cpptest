@@ -1,33 +1,19 @@
 #include<iostream>
+#include<vector>
 #include<memory>
 
 using namespace std;
 
-struct Data
+static void dd(vector<unique_ptr<int>> &c, unique_ptr<int> v)
 {
-    int a{};
-    int b{};
-    int c{};
-    double d{};
-};
-
-void printer(Data& d)
-{
-    cout << d.a << ' ' <<
-        d.b << ' ' <<
-        d.c << ' ' <<
-        d.d << '\n';
+    c.push_back(move(v));
 }
 
 int main()
 {
-    Data data{};
-    Data* pdata = new Data();
-    auto pudata = make_unique<Data>();
-    auto pp = pudata;
-
-    printer(data);
-    printer(*pdata);
-    printer(*pudata);
+    vector<unique_ptr<int>> cache{};
+    unique_ptr<int> a = make_unique<int>(12);
+    dd(cache, move(a));
+    if (!a) cout << "Empty!\n";
     return 0;
 }
